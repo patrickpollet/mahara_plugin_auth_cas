@@ -1,1 +1,85 @@
 
+*************************************************************************************************
+
+			CAS Authentication Plugin for Mahara.
+
+*************************************************************************************************
+
+@copyright 	(c) 2011 INSA de Lyon France
+@license 	GNU General Public License - http://www.gnu.org/copyleft/gpl.html
+@author 	patrick.pollet@insa-lyon.fr
+@version    0.1 
+
+Requires
+--------
+
+An institutional CAS server AND a LDAP server for user's details 
+
+Somme experience with Moodle's CAS auth plugin will certainly help, since the settings are the same
+
+Some guts since this is a preliminary version ;-) 
+
+How it works
+------------
+This plugin provides an alternate login url which is mahara/auth/cas/index.php. 
+AFter authentication to the 'central CAS' server, user account will be autocreated if needed
+from the associated LDAP server.
+
+Currently there can be only ONE instance of this plugin on a whole Mahara site. Unpredicable results
+will occur if you add several instances to several institutions.
+
+Installation
+-------------
+
+Get the latest zip file from github https://github.com/patrickpollet/mahara_plugin_auth_cas 
+
+1) unzip the file (named something like patrickpollet-mahara_plugin_auth_cas-ef163b7.zip) into the auth/ direcory
+of your Mahara installation
+
+2) rename the folder from patrickpollet-mahara_plugin_auth_cas-xxxxx to cas
+
+3) Enable the plugin: 
+		Log in Mahara as an administrator. 
+		Go to "Site Administration" > "Administer Extentions"
+		Enable the cas plugin
+		
+4) Configure  THE institution you want to authenticate with the CAS plugin :
+		in "Site Administration" > "Manage Institutions" click on "Edit" for the institution you want to configure
+		under "Authentication plugin" select "CAS" and click "Add"
+		enter CAS specific field's and LDAP field's values as required
+		These values are exactly the same as those required for the CAS authentication plugin of Moodle. 
+		click submit		
+		
+5) Testing :
+        Stay connected as administrator and, USING ANOTHER BROWSER, or ANOTHER PC ( important in case something goes wrong)
+        call the URL http://yourmaharasite/auth/cas/ 
+        You should be redirected to the CAS server and after authentication, back to the Mahara front page  logged in as
+        the proper user 
+        
+6) Caution :
+        In Mahara, users are associated with the authentication method they have used at the first connection (internal,LDAP...); 
+        thus if the username used in CAS already exists in Mahara database, he won't be able to login by CAS. You must change
+        manually in table 'usr' the value of the column 'authinstance' to match the numeric id of the CAS authentification plugin
+         (the value of column id in table  'auth_instance' for the line having authname='cas').
+                		
+		
+7) Add the link to the CAS entry page on your site.
+        It can be done by editing the site front page
+        or adding a site link (public only so it will diseapear when user is logged in) 
+        or editing the sideblock's template login.tpl in your theme to add the link 
+        and eventually remove the regular username/password entry boxes if you are 100% CAS 
+        
+8) AN emergency login box (for admin and internal users) is available  at http://yourmaharasite/auth/cas/admin/login.php
+        
+9) Getting rid of it :
+        Goto to site administration / extensions and click on the link [hide] for the cas plugin          			
+        Remove all references to http://yourmaharasite/auth/cas/ in your site 
+        
+10) TODO 
+       HAve a site config option screen instead of an instance configuration        
+       Make the french translation
+       clean the code which is still non compliant to Mahara coding style
+		
+Enjoy 
+
+PP 12/12/2011 		

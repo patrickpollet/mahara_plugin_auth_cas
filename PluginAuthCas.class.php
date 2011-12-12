@@ -41,6 +41,11 @@ class PluginAuthCas extends PluginAuthLdap {
         return true;
     }
     
+     public static function can_be_disabled() {
+        return true;
+    }
+
+    
     public static function get_instance_config_options($institution, $instance = 0) {
 		$caslangprefix = 'PHPCAS_LANG_';
 		$CASLANGUAGES = array ();
