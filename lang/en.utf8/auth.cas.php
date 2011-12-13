@@ -34,21 +34,21 @@ $string['description'] = 'Authenticate against an CAS SSO server';
 $string['login'] = 'CAS Login';
 $string['notusable'] = 'Please install the PHP LDAP extension';
 
-$string['plugincasnotinstalled']='Your administrator did not install the CAS authentication plugin';
-$string['noinstanceofplugincasinstalled']='No instance of the CAS authentication plugin has been associated to an institution';
-$string['morethanoneinstanceofplugincasinstalled']='You cannot have more than one instance of the CAS authentication plugin in a Mahara site';
+$string['plugincasnotinstalled'] = 'Your administrator did not install the CAS authentication plugin';
+$string['noinstanceofplugincasinstalled'] = 'No instance of the CAS authentication plugin has been associated to an institution';
+$string['morethanoneinstanceofplugincasinstalled'] = 'You cannot have more than one instance of the CAS authentication plugin in a Mahara site';
 
 
-$string['cassettings']='CAS server settings';
-$string['ldapsettings']='LDAP settings';
+$string['cassettings'] = 'CAS server settings';
+$string['ldapsettings'] = 'LDAP settings';
 
 
-$string['cas_hostname']='CAS server host name'; 
-$string['cas_port']='Port';
-$string['cas_version']='Version';
-$string['cas_baseuri']='Base URI';
-$string['cas_language']='Language';
-$string['cas_proxy']='Proxy mode';
-$string['cas_logout']='Logout CAS';
-$string['cas_certificatecheck' ]='Server validation';
-$string['cas_certificatepath']='Certificate path';
+$string['cas_hostname'] = 'CAS server host name';
+$string['cas_port'] = 'Port';
+$string['cas_version'] = 'Version';
+$string['cas_baseuri'] = 'Base URI';
+$string['cas_language'] = 'Language';
+$string['cas_proxy'] = 'Proxy mode';
+$string['cas_logout'] = 'Logout CAS';
+$string['cas_certificatecheck'] = 'Server validation';
+$string['cas_certificatepath'] = 'Certificate path';
