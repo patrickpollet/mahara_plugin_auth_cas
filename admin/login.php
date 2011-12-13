@@ -21,7 +21,12 @@
  * @author     Patrick Pollet <pp@patrickpollet.net>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
  * @copyright  (C) 2006-2011 Catalyst IT Ltd http://catalyst.net.nz
- * @copyright  (C) 2011 INSA de Lyon France
+ * this script is a simple copy of the admin login page provided by
+ *     University of Geneva for its Mahara Shibboleth auth plugin
+ *     @see http://code.google.com/p/mahara-shibboleth-server-authentication/
+ *     @copyright (c) 2010 University of Geneva
+ *     @license GNU General Public License - http://www.gnu.org/copyleft/gpl.html
+ *     @author laurent.opprecht@unige.ch
  *
  */
 
