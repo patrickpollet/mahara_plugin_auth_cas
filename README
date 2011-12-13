@@ -8,24 +8,25 @@
 @copyright 	(c) 2011 INSA de Lyon France
 @license 	GNU General Public License - http://www.gnu.org/copyleft/gpl.html
 @author 	patrick.pollet@insa-lyon.fr
-@version    0.1 
+@version    0.2
 
 Requires
 --------
 
 An institutional CAS server AND a LDAP server for user's details 
 
-Somme experience with Moodle's CAS auth plugin will certainly help, since the settings are the same
+Some experience with Moodle's CAS auth plugin will certainly help, since the settings are the same
 
 Some guts since this is a preliminary version ;-) 
 
 How it works
 ------------
+
 This plugin provides an alternate login url which is mahara/auth/cas/index.php. 
-AFter authentication to the 'central CAS' server, user account will be autocreated if needed
+After authentication to the 'central CAS' server, user account will be autocreated if needed
 from the associated LDAP server.
 
-Currently there can be only ONE instance of this plugin on a whole Mahara site. Unpredicable results
+Currently there can be only ONE instance of this plugin on a whole Mahara site. Unpredictable results
 will occur if you add several instances to several institutions.
 
 Installation
@@ -33,7 +34,7 @@ Installation
 
 Get the latest zip file from github https://github.com/patrickpollet/mahara_plugin_auth_cas 
 
-1) unzip the file (named something like patrickpollet-mahara_plugin_auth_cas-ef163b7.zip) into the auth/ direcory
+1) unzip the file (named something like patrickpollet-mahara_plugin_auth_cas-ef163b7.zip) into the auth/ directory
 of your Mahara installation
 
 2) rename the folder from patrickpollet-mahara_plugin_auth_cas-xxxxx to cas
@@ -78,8 +79,7 @@ of your Mahara installation
 10) TODO 
        HAve a site config option screen instead of an instance configuration        
        Make the french translation
-       clean the code which is still non compliant to Mahara coding style
 		
 Enjoy 
 
-PP 12/12/2011 		
+PP 13/12/2011

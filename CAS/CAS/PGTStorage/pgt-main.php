@@ -42,8 +42,7 @@
  * @ingroup internalPGTStorage
  */
 
-class PGTStorage
-{
+class PGTStorage {
     /**
      * @addtogroup internalPGTStorage
      * @{
@@ -60,13 +59,12 @@ class PGTStorage
      *
      * @protected
      */
-    function PGTStorage($cas_parent)
-    {
-        phpCAS::traceBegin();
-        if (!$cas_parent->isProxy()) {
-            phpCAS::error('defining PGT storage makes no sense when not using a CAS proxy');
+    function PGTStorage ($cas_parent) {
+        phpCAS::traceBegin ();
+        if (!$cas_parent->isProxy ()) {
+            phpCAS::error ('defining PGT storage makes no sense when not using a CAS proxy');
         }
-        phpCAS::traceEnd();
+        phpCAS::traceEnd ();
     }
 
     // ########################################################################
@@ -79,9 +77,8 @@ class PGTStorage
      *
      * @public
      */
-    function getStorageType()
-    {
-        phpCAS::error(__CLASS__ . '::' . __FUNCTION__ . '() should never be called');
+    function getStorageType () {
+        phpCAS::error (__CLASS__ . '::' . __FUNCTION__ . '() should never be called');
     }
 
     /**
@@ -90,9 +87,8 @@ class PGTStorage
      *
      * @public
      */
-    function getStorageInfo()
-    {
-        phpCAS::error(__CLASS__ . '::' . __FUNCTION__ . '() should never be called');
+    function getStorageInfo () {
+        phpCAS::error (__CLASS__ . '::' . __FUNCTION__ . '() should never be called');
     }
 
     // ########################################################################
@@ -118,8 +114,7 @@ class PGTStorage
      * @protected
      * @deprecated not used.
      */
-    function setErrorMessage($error_message)
-    {
+    function setErrorMessage ($error_message) {
         $this->_error_message = $error_message;
     }
 
@@ -132,8 +127,7 @@ class PGTStorage
      * @public
      * @deprecated not used.
      */
-    function getErrorMessage()
-    {
+    function getErrorMessage () {
         return $this->_error_message;
     }
 
@@ -157,8 +151,7 @@ class PGTStorage
      *
      * @protected
      */
-    function isInitialized()
-    {
+    function isInitialized () {
         return $this->_initialized;
     }
 
@@ -167,8 +160,7 @@ class PGTStorage
      *
      * @protected
      */
-    function init()
-    {
+    function init () {
         $this->_initialized = TRUE;
     }
 
@@ -185,9 +177,8 @@ class PGTStorage
      *
      * @protected
      */
-    function write($pgt, $pgt_iou)
-    {
-        phpCAS::error(__CLASS__ . '::' . __FUNCTION__ . '() should never be called');
+    function write ($pgt, $pgt_iou) {
+        phpCAS::error (__CLASS__ . '::' . __FUNCTION__ . '() should never be called');
     }
 
     /**
@@ -199,9 +190,8 @@ class PGTStorage
      *
      * @protected
      */
-    function read($pgt_iou)
-    {
-        phpCAS::error(__CLASS__ . '::' . __FUNCTION__ . '() should never be called');
+    function read ($pgt_iou) {
+        phpCAS::error (__CLASS__ . '::' . __FUNCTION__ . '() should never be called');
     }
 
     /** @} */
@@ -209,6 +199,6 @@ class PGTStorage
 }
 
 // include specific PGT storage classes
-include_once(dirname(__FILE__) . '/pgt-file.php');
+include_once(dirname (__FILE__) . '/pgt-file.php');
 
 ?>

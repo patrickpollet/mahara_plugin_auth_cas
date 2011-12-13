@@ -1,11 +1,55 @@
 <?php
 /**
+ * Mahara: Electronic portfolio, weblog, resume builder and social networking
+ * Copyright (C) 2006-2009 Catalyst IT Ltd (http://www.catalyst.net.nz)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @package    mahara
+ * @subpackage auth-cas
+ * @author     Patrick Pollet <pp@patrickpollet.net>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL
+ * @copyright  (C) 2006-2011 Catalyst IT Ltd http://catalyst.net.nz
+ * @copyright  (C) 2011 INSA de Lyon France
+ *
+ * This file incorporates work covered by the following copyright and
+ * permission notice:
+ *
+ *    Moodle - Modular Object-Oriented Dynamic Learning Environment
+ *             http://moodle.com
+ *
+ *    Copyright (C) 2001-3001 Martin Dougiamas        http://dougiamas.com
+ *
+ *    This program is free software; you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation; either version 2 of the License, or
+ *    (at your option) any later version.
+ *
+ *    This program is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details:
+ *
+ *             http://www.gnu.org/copyleft/gpl.html
+ */
+
+/**
  * Plugin configuration class
  */
 
 
-class PluginAuthCas extends PluginAuthLdap
-{
+class PluginAuthCas extends PluginAuthLdap {
 
     const NAME = 'cas';
     const CAS_HOSTNAME = 'cas_hostname';
@@ -30,35 +74,32 @@ class PluginAuthCas extends PluginAuthLdap
         self::CAS_CERTIFICATEPATH => '',
     );
 
-    public static function has_config()
-    {
+    public static function has_config () {
         return false;
     }
 
-    public static function get_config_options()
-    {
+    public static function get_config_options () {
         return array();
     }
 
-    public static function has_instance_config()
-    {
+    public static function has_instance_config () {
         return true;
     }
 
-    public static function can_be_disabled()
-    {
+    public static function can_be_disabled () {
         return true;
     }
 
 
-    public static function get_instance_config_options($institution, $instance = 0)
-    {
+    public static function get_instance_config_options ($institution, $instance = 0) {
+
+        //collect all available values for CAS language
         $caslangprefix = 'PHPCAS_LANG_';
         $CASLANGUAGES = array();
 
-        $consts = get_defined_constants(true);
+        $consts = get_defined_constants (true);
         foreach ($consts['user'] as $key => $value) {
-            if (substr($key, 0, strlen($caslangprefix)) == $caslangprefix) {
+            if (substr ($key, 0, strlen ($caslangprefix)) == $caslangprefix) {
                 $CASLANGUAGES[$value] = $value;
             }
         }
@@ -66,40 +107,38 @@ class PluginAuthCas extends PluginAuthLdap
             $CASLANGUAGES = array('english' => 'english',
                 'french' => 'french');
         }
-
+        //currently on twoly versions
         $CASVERSIONS = array();
         $CASVERSIONS[CAS_VERSION_1_0] = 'CAS 1.0';
         $CASVERSIONS[CAS_VERSION_2_0] = 'CAS 2.0';
 
-        $yesnoopt = array('yes' => 'Yes', 'no' => 'No');
 
-
-        //get LDAP instance values
-        $parent = parent::get_instance_config_options($institution, $instance);
+        //get LDAP instance values from parent class
+        $parent = parent::get_instance_config_options ($institution, $instance);
 
         // change  what must be changed
         unset($parent['elements']['authname']); // we shall change it to cas
         unset($parent['elements']['institution']); //pieforms does not want hidden in fieldsets
         unset($parent['elements']['instance']);
 
-        // we want it at the 1er item as usual
-        $first = array_shift($parent['elements']); // ['instancename'];
+        // we want the instance name  at the 1st item as usual
+        $first = array_shift ($parent['elements']); // ['instancename'];
 
         // add CAS specific informations
         // first read possible values from DB
         if ($instance > 0) {
-            $default = get_record('auth_instance', 'id', $instance);
+            $default = get_record ('auth_instance', 'id', $instance);
             if ($default == false) {
                 throw new SystemException('Could not find data for auth instance ' . $instance);
             }
-            $current_config = get_records_menu('auth_instance_config', 'instance', $instance, '', 'field, value');
+            $current_config = get_records_menu ('auth_instance_config', 'instance', $instance, '', 'field, value');
 
             if ($current_config == false) {
                 $current_config = array();
             }
 
             foreach (self::$default_config as $key => $value) {
-                if (array_key_exists($key, $current_config)) {
+                if (array_key_exists ($key, $current_config)) {
                     self::$default_config[$key] = $current_config[$key];
                 }
             }
@@ -124,17 +163,17 @@ class PluginAuthCas extends PluginAuthLdap
                 'type' => 'hidden',
                 'value' => self::NAME,
             ),
-            // then two filedsets
+            // then two fielddsets
 
             'fsCAS' => array(
                 'type' => 'fieldset',
-                'legend' => get_string('cassettings', 'auth.cas'),
+                'legend' => get_string ('cassettings', 'auth.cas'),
                 'collapsible' => true,
                 'collapsed' => true,
                 'elements' => array(
                     self::CAS_HOSTNAME => array(
                         'type' => 'text',
-                        'title' => get_string(self::CAS_HOSTNAME, 'auth.cas'),
+                        'title' => get_string (self::CAS_HOSTNAME, 'auth.cas'),
                         'rules' => array(
                             'required' => true,
                         ),
@@ -143,7 +182,7 @@ class PluginAuthCas extends PluginAuthLdap
                     ),
                     self::CAS_BASEURI => array(
                         'type' => 'text',
-                        'title' => get_string(self::CAS_BASEURI, 'auth.cas'),
+                        'title' => get_string (self::CAS_BASEURI, 'auth.cas'),
                         'rules' => array(
                             'required' => true,
                         ),
@@ -152,7 +191,7 @@ class PluginAuthCas extends PluginAuthLdap
                     ),
                     self::CAS_PORT => array(
                         'type' => 'text',
-                        'title' => get_string(self::CAS_PORT, 'auth.cas'),
+                        'title' => get_string (self::CAS_PORT, 'auth.cas'),
                         'rules' => array(
                             'required' => true,
                         ),
@@ -161,7 +200,7 @@ class PluginAuthCas extends PluginAuthLdap
                     ),
                     self::CAS_VERSION => array(
                         'type' => 'select',
-                        'title' => get_string(self::CAS_VERSION, 'auth.cas'),
+                        'title' => get_string (self::CAS_VERSION, 'auth.cas'),
                         'options' => $CASVERSIONS,
                         'rules' => array(
                             'required' => true,
@@ -171,7 +210,7 @@ class PluginAuthCas extends PluginAuthLdap
                     ),
                     self::CAS_VERSION => array(
                         'type' => 'select',
-                        'title' => get_string(self::CAS_VERSION, 'auth.cas'),
+                        'title' => get_string (self::CAS_VERSION, 'auth.cas'),
                         'options' => $CASVERSIONS,
                         'rules' => array(
                             'required' => true,
@@ -182,7 +221,7 @@ class PluginAuthCas extends PluginAuthLdap
 
                     self::CAS_LANGUAGE => array(
                         'type' => 'select',
-                        'title' => get_string(self::CAS_LANGUAGE, 'auth.cas'),
+                        'title' => get_string (self::CAS_LANGUAGE, 'auth.cas'),
                         'options' => $CASLANGUAGES,
                         'rules' => array(
                             'required' => true,
@@ -193,26 +232,26 @@ class PluginAuthCas extends PluginAuthLdap
 
                     self::CAS_PROXY => array(
                         'type' => 'checkbox',
-                        'title' => get_string(self::CAS_PROXY, 'auth.cas'),
+                        'title' => get_string (self::CAS_PROXY, 'auth.cas'),
                         'defaultvalue' => self::$default_config[self::CAS_PROXY],
                         'help' => true,
                     ),
                     self::CAS_LOGOUT => array(
                         'type' => 'checkbox',
-                        'title' => get_string(self::CAS_LOGOUT, 'auth.cas'),
+                        'title' => get_string (self::CAS_LOGOUT, 'auth.cas'),
                         'defaultvalue' => self::$default_config[self::CAS_LOGOUT],
                         'help' => true,
                     ),
                     self::CAS_CERTIFICATECHECK => array(
                         'type' => 'checkbox',
-                        'title' => get_string(self::CAS_CERTIFICATECHECK, 'auth.cas'),
+                        'title' => get_string (self::CAS_CERTIFICATECHECK, 'auth.cas'),
                         'defaultvalue' => self::$default_config[self::CAS_CERTIFICATECHECK],
                         'help' => true,
                     ),
 
                     self::CAS_CERTIFICATEPATH => array(
                         'type' => 'text',
-                        'title' => get_string(self::CAS_CERTIFICATEPATH, 'auth.cas'),
+                        'title' => get_string (self::CAS_CERTIFICATEPATH, 'auth.cas'),
                         'defaultvalue' => self::$default_config[self::CAS_CERTIFICATEPATH],
                         'help' => true,
                     ),
@@ -220,16 +259,13 @@ class PluginAuthCas extends PluginAuthLdap
             ),
             'fsLDAP' => array(
                 'type' => 'fieldset',
-                'legend' => get_string('ldapsettings', 'auth.cas'),
+                'legend' => get_string ('ldapsettings', 'auth.cas'),
                 'collapsible' => true,
                 'collapsed' => true,
                 'elements' => $parent['elements'],
             ),
         );
-        //put the CAS values at the top 
-        //$parent['elements']=array_merge($elements,$parent['elements']);
-        // pp_error_log("retour",$elements);
-        //return $parent;
+
         return array(
             'elements' => $elements,
             'renderer' => 'table'
@@ -238,15 +274,14 @@ class PluginAuthCas extends PluginAuthLdap
     }
 
 
-    public static function save_config_options($values, $form)
-    {
+    public static function save_config_options ($values, $form) {
 
 
         // let parent take care of the LDAP settings and of creating the authinstance if needed
-        $values = parent::save_config_options($values, $form);
+        $values = parent::save_config_options ($values, $form);
 
         //at this stage the instance does exist        
-        $current = get_records_assoc('auth_instance_config', 'instance', $values['instance'], '', 'field, value');
+        $current = get_records_assoc ('auth_instance_config', 'instance', $values['instance'], '', 'field, value');
 
         if (empty($current)) {
             $current = array();
@@ -270,11 +305,11 @@ class PluginAuthCas extends PluginAuthLdap
             $record->field = $field;
             $record->value = $value;
 
-            if ($values['create'] || !array_key_exists($field, $current)) {
-                insert_record('auth_instance_config', $record);
+            if ($values['create'] || !array_key_exists ($field, $current)) {
+                insert_record ('auth_instance_config', $record);
             }
             else {
-                update_record('auth_instance_config', $record, array('instance' => $values['instance'], 'field' => $field));
+                update_record ('auth_instance_config', $record, array('instance' => $values['instance'], 'field' => $field));
             }
         }
 
