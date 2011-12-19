@@ -29,10 +29,9 @@ defined ('INTERNAL') || die();
 
 $string['title'] = 'CAS';
 $string['description'] = 'Authenticate against an CAS SSO server';
-
+$string['notusable'] = 'You can have only one instance of CAS auth. plugin';
 
 $string['login'] = 'CAS Login';
-$string['notusable'] = 'Please install the PHP LDAP extension';
 
 $string['plugincasnotinstalled'] = 'Your administrator did not install the CAS authentication plugin';
 $string['noinstanceofplugincasinstalled'] = 'No instance of the CAS authentication plugin has been associated to an institution';

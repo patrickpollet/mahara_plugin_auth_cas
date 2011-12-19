@@ -90,6 +90,16 @@ class PluginAuthCas extends PluginAuthLdap {
         return true;
     }
 
+    public static function is_usable() {
+       // this definitively prohibits adding a second instnace of the pluin
+        //but the error message is wrong . It display $string['notusable'] from auth/ldap plugin
+        // and not mine redefined in auth/cas
+        // Ensure that plugin is not already in use by another institution
+        if (parent::is_usable()  && !count_records('auth_instance', 'authname', self::NAME)) {
+            return true;
+        }
+        return false;
+    }
 
     public static function get_instance_config_options ($institution, $instance = 0) {
 
