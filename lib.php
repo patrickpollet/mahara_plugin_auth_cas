@@ -154,6 +154,18 @@ class AuthCas extends AuthLdap {
                     set_profile_field ($user->id, $field, $ldapdetails[$field]);
                 }
             }
+            //pp_error_log ('maj compte ',$ldapdetails);
+
+            //we also must update the student id in table usr_institution
+            // these attributes were set in the parent class by a call to init($id)
+            // $this->instanceid
+            //  $this->institution
+            if (!empty($this->instanceid) && !empty( $this->institution )) {
+                set_field ('usr_institution','studentid',$user->studentid,'usr',$user->id,'institution', $this->institution );
+                //pp_error_log ('maj compte II',$user);
+            }
+
+
         }
         return true;
     }

@@ -29,13 +29,19 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+
+//
+// hack by Patrick Pollet to handle usage of this library in cli mode by Mahara
+//
+if (!defined ('CLI')) {
+
 //
 // hack by Vangelis Haniotakis to handle the absence of $_SERVER['REQUEST_URI'] in IIS
 //
 if (!isset($_SERVER['REQUEST_URI'])) {
     $_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'] . '?' . $_SERVER['QUERY_STRING'];
 }
-
+}
 //
 // another one by Vangelis Haniotakis also to make phpCAS work with PHP5
 //
