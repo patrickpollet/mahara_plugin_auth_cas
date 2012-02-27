@@ -28,26 +28,26 @@
 defined ('INTERNAL') || die();
 
 $string['title'] = 'CAS';
-$string['description'] = 'Authenticate against a CAS SSO server';
-$string['notusable'] = 'You can have only one instance of the CAS authentification plugin';
+$string['description'] = 'Authentification à l\'aide d\'un serveur CAS SSO';
+$string['notusable'] = 'Vous ne pouvez utiliser qu\'une seule instance du plugin CAS dans tout le site';
 
-$string['login'] = 'CAS Login';
+$string['login'] = 'Connexion CAS';
 
-$string['plugincasnotinstalled'] = 'Your administrator has not install the CAS authentication plugin';
-$string['noinstanceofplugincasinstalled'] = 'No instance of the CAS authentication plugin has been associated with an institution';
-$string['morethanoneinstanceofplugincasinstalled'] = 'You cannot have more than one instance of the CAS authentication plugin in a Mahara site';
-
-
-$string['cassettings'] = 'CAS server settings';
-$string['ldapsettings'] = 'LDAP settings';
+$string['plugincasnotinstalled'] = 'Votre administrateur n\'a pas installé le plugin d\'authentification CAS';
+$string['noinstanceofplugincasinstalled'] = 'Aucune instance du plugin d\'authentification CAS n\'a été asscociée à aucune institution';
+$string['morethanoneinstanceofplugincasinstalled'] = 'Vous ne pouvez pas avoir plus d\'une instance du plugin d\'authentification CAS dans tout le site Mahara';
 
 
-$string['cas_hostname'] = 'CAS server host name';
+$string['cassettings'] = 'Paremètres du serveur CAS';
+$string['ldapsettings'] = 'Paramètres LDAP';
+
+
+$string['cas_hostname'] = 'Nom d\'hôte du serveur CAS';
 $string['cas_port'] = 'Port';
 $string['cas_version'] = 'Version';
-$string['cas_baseuri'] = 'Base URI';
-$string['cas_language'] = 'Language';
-$string['cas_proxy'] = 'Proxy mode';
-$string['cas_logout'] = 'Logout CAS';
-$string['cas_certificatecheck'] = 'Server validation';
-$string['cas_certificatepath'] = 'Certificate path';
+$string['cas_baseuri'] = 'Base de l\'URI';
+$string['cas_language'] = 'Langue';
+$string['cas_proxy'] = 'Mode du Proxy';
+$string['cas_logout'] = 'Déconnexion CAS';
+$string['cas_certificatecheck'] = 'Valider le serveur';
+$string['cas_certificatepath'] = 'Chemin vers le certificat';
