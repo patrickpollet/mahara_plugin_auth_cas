@@ -31,9 +31,9 @@
 
 
 //
-// hack by Patrick Pollet to handle usage of this library in cli mode by Mahara
+// hack by Patrick Pollet to handle usage of this library in cli/cron mode by Mahara
 //
-if (!defined ('CLI')) {
+if (!defined ('CLI') && ! defined('CRON')) {
 
 //
 // hack by Vangelis Haniotakis to handle the absence of $_SERVER['REQUEST_URI'] in IIS
