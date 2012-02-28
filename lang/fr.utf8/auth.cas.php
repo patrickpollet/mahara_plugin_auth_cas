@@ -38,7 +38,7 @@ $string['noinstanceofplugincasinstalled'] = 'Aucune instance du plugin d\'authen
 $string['morethanoneinstanceofplugincasinstalled'] = 'Vous ne pouvez pas avoir plus d\'une instance du plugin d\'authentification CAS dans tout le site Mahara';
 
 
-$string['cassettings'] = 'Paremètres du serveur CAS';
+$string['cassettings'] = 'Paramètres du serveur CAS';
 $string['ldapsettings'] = 'Paramètres LDAP';
 
 
