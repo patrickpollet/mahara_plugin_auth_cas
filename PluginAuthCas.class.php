@@ -118,8 +118,8 @@ class PluginAuthCas extends PluginAuthLdap {
                 'french' => 'french');
         }
         
-        pp_error_log('langues', $CASLANGUAGES);
-        //currently on twoly versions
+        //pp_error_log('langues', $CASLANGUAGES);
+        //currently only two versions
         $CASVERSIONS = array();
         $CASVERSIONS[CAS_VERSION_1_0] = 'CAS 1.0';
         $CASVERSIONS[CAS_VERSION_2_0] = 'CAS 2.0';
