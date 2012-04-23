@@ -67,7 +67,7 @@ class PluginAuthCas extends PluginAuthLdap {
         self::CAS_PORT => '443',
         self::CAS_VERSION => CAS_VERSION_2_0,
         self::CAS_BASEURI => '',
-        self::CAS_LANGUAGE => '',
+        self::CAS_LANGUAGE => 'english',
         self::CAS_PROXY => '0',
         self::CAS_LOGOUT => '0',
         self::CAS_CERTIFICATECHECK => '',
@@ -117,6 +117,8 @@ class PluginAuthCas extends PluginAuthLdap {
             $CASLANGUAGES = array('english' => 'english',
                 'french' => 'french');
         }
+        
+        pp_error_log('langues', $CASLANGUAGES);
         //currently on twoly versions
         $CASVERSIONS = array();
         $CASVERSIONS[CAS_VERSION_1_0] = 'CAS 1.0';
@@ -284,12 +286,23 @@ class PluginAuthCas extends PluginAuthLdap {
     }
 
 
-    public static function save_config_options ($values, $form) {
-
+    /**
+     * 
+     * override PluginAuthLdap::save_instance_config_options... 
+     * @param unknown_type $values
+     * @param unknown_type $form
+     */
+    
+    public static function save_instance_config_options ($values, $form) {
+ 		//pp_error_log('values', $values);
 
         // let parent take care of the LDAP settings and of creating the authinstance if needed
-        $values = parent::save_config_options ($values, $form);
-
+        $values = parent::save_instance_config_options ($values, $form);
+        
+        
+       
+        
+        //pp_error_log('values II', $values);
         //at this stage the instance does exist        
         $current = get_records_assoc ('auth_instance_config', 'instance', $values['instance'], '', 'field, value');
 
@@ -308,6 +321,8 @@ class PluginAuthCas extends PluginAuthLdap {
             self::CAS_CERTIFICATECHECK => $values[self::CAS_CERTIFICATECHECK],
             self::CAS_CERTIFICATEPATH => $values[self::CAS_CERTIFICATEPATH],
         );
+        
+        //pp_error_log('def_conf', self::$default_config);
 
         foreach (self::$default_config as $field => $value) {
             $record = new stdClass();
