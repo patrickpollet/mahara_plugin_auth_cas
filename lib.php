@@ -68,7 +68,6 @@ class AuthCas extends AuthLdap {
 		$this->ready = parent::init($id);
 		// Check that required fields are set
 		if (empty($this->config['cas_hostname']) ||
-		empty($this->config['cas_baseuri']) ||
 		empty($this->config['cas_port']) ||
 		empty($this->config['cas_language'])
 		) {

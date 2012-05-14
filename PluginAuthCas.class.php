@@ -196,7 +196,7 @@ class PluginAuthCas extends PluginAuthLdap {
                         'type' => 'text',
                         'title' => get_string (self::CAS_BASEURI, 'auth.cas'),
                         'rules' => array(
-                            'required' => true,
+                            'required' => false,
                         ),
                         'defaultvalue' => self::$default_config[self::CAS_BASEURI],
                         'help' => true,
