@@ -1,4 +1,3 @@
-
 *************************************************************************************************
 
 			CAS Authentication Plugin for Mahara.
@@ -14,6 +13,8 @@ Requires
 --------
 
 An institutional CAS server AND a LDAP server for user's details 
+
+The php ldap extension MUST be installed
 
 Some experience with Moodle's CAS auth plugin will certainly help, since the settings are the same
 
