@@ -34,17 +34,20 @@ Installation
 -------------
 
 Get the latest zip file from github https://github.com/patrickpollet/mahara_plugin_auth_cas 
+     1) if you rae running Mahara < 1.8 change branch to 1.7_stable, otherwise stay on master branch 
 
-     1) unzip the file (named something like patrickpollet-mahara_plugin_auth_cas-ef163b7.zip) into the auth/ directory 
+     2) unzip the file (named something like patrickpollet-mahara_plugin_auth_cas-ef163b7.zip) into the auth/ directory 
         of your Mahara installation
 
-     2) rename the folder from patrickpollet-mahara_plugin_auth_cas-xxxxx to cas
+     3) rename the folder from patrickpollet-mahara_plugin_auth_cas-xxxxx to cas
 
 
 OR if you use git (recommanded method):
      1)  on the command line, go to your mahara/auth directory  and type  
      2)  git clone https://github.com/patrickpollet/mahara_plugin_auth_cas.git cas
      3) this will create the required cas directory at the proper place for Mahara to find it  
+     3bis) if you are running Mahara <1.8 change the branch by typing
+          git checkout 1.7_stable 
      4) if your main mahara is also under git type echo htdocs/auth/cas >> .git/info/exclude
      5) you could update at any time by typing  git pull from mahara/auth/cas directory ;-))
  
