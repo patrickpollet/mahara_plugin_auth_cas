@@ -129,9 +129,7 @@ class AuthCas extends AuthLdap {
 		 * this call will die with phpCAS fatal error , so no way to break in ;-)
 		 * and we do not call connectCAS() either ! this should have been done already in auth/cas/index.php
 		 */
-		// why converting CAS return username to Lower case ??? 
-		//if (strtolower(phpCAS::getUser()) != $username) {
-		if (phpCAS::getUser() != $username) {
+		if (strtolower(phpCAS::getUser()) != strtolower($username)) {
 			//pp_error_log("raté ","test getuser");
 			return false;
 		}

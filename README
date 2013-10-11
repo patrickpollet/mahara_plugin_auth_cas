@@ -1,4 +1,3 @@
-
 *************************************************************************************************
 
 			CAS Authentication Plugin for Mahara.
@@ -14,6 +13,8 @@ Requires
 --------
 
 An institutional CAS server AND a LDAP server for user's details 
+
+The php ldap extension MUST be installed
 
 Some experience with Moodle's CAS auth plugin will certainly help, since the settings are the same
 
@@ -42,9 +43,10 @@ Get the latest zip file from github https://github.com/patrickpollet/mahara_plug
 
 OR if you use git (recommanded method):
      1)  on the command line, go to your mahara/auth directory  and type  
-     2)  git clone git@github.com:patrickpollet/mahara_plugin_auth_cas.git cas
+     2)  git clone https://github.com/patrickpollet/mahara_plugin_auth_cas.git cas
      3) this will create the required cas directory at the proper place for Mahara to find it  
-     4) you could update at any time by typing  git pull from mahara/auth/cas directory ;-))
+     4) if your main mahara is also under git type echo htdocs/auth/cas >> .git/info/exclude
+     5) you could update at any time by typing  git pull from mahara/auth/cas directory ;-))
  
 
 3) Enable the plugin: 

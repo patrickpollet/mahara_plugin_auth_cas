@@ -74,6 +74,35 @@ class PluginAuthCas extends PluginAuthLdap {
         self::CAS_CERTIFICATEPATH => '',
     );
 
+    public static function get_cron() {
+        return array(
+            (object)array(
+                'callfunction' => 'auth_cas_sync_cron',
+                'minute' => '30',
+                'hour' => '0',
+            ),
+        );
+    }
+
+    /**
+     * Synchronize users and groups with the LDAP server
+     */
+    public static function auth_cas_sync_cron() {
+        $auths = get_records_array('auth_instance', 'authname', 'cas', 'id', 'id');
+        if (!$auths) {
+            return;
+        }
+        foreach ($auths as $auth) {
+            /* @var $authobj AuthCas */
+            $authobj = AuthFactory::create($auth->id);
+            // Each instance will decide for itself whether it should sync users and/or groups
+            // User sync needs to be called before group sync in order for new users to wind
+            // up in the correct groups
+            $authobj->sync_users();
+            $authobj->sync_groups();
+        }
+    }
+
     public static function has_config () {
         return false;
     }
@@ -269,14 +298,8 @@ class PluginAuthCas extends PluginAuthLdap {
                     ),
                 ),
             ),
-            'fsLDAP' => array(
-                'type' => 'fieldset',
-                'legend' => get_string ('ldapsettings', 'auth.cas'),
-                'collapsible' => true,
-                'collapsed' => true,
-                'elements' => $parent['elements'],
-            ),
         );
+        $elements = array_merge($elements, $parent['elements']);
 
         return array(
             'elements' => $elements,
