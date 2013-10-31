@@ -65,12 +65,13 @@ if (get_field ('auth_installed', 'active', 'name', 'cas') != 1) {
 
 
 //pp_error_log("start",'');
-
+$wantsurlpath = param_variable('wantsurl', false);
 $wantsurl = $CFG->wwwroot;
-
+if (!$SESSION->get ('wantsurl')) {
+    $SESSION->set ('wantsurl', $wantsurlpath);
+}
 if ($SESSION->get ('wantsurl')) {
-    $wantsurl = $SESSION->get ('wantsurl');
-    $SESSION->set ('wantsurl', null);
+    $wantsurl = $CFG->wwwroot . ltrim($SESSION->get ('wantsurl'), '/');
 }
 // sanity check the redirect - we don't want to loop
 if (preg_match ('/\/auth\/cas\//', $wantsurl)) {
@@ -85,7 +86,8 @@ if (!preg_match ('/' . $_SERVER['HTTP_HOST'] . '/', $wantsurl)) {
 
 // they are logged in, so they dont need to be here
 if ($USER->is_logged_in ()) {
-    redirect ($wanturl);
+    $SESSION->set ('wantsurl', null);
+    redirect ($wantsurl);
 }
 //pp_error_log("ligne 77",$wantsurl);
 
@@ -121,6 +123,7 @@ if (phpCAS::CheckAuthentication ()) {
 	
     //login_submit (NULL, array('login_username' => phpCAS::getUser (), 'login_password' => 'not cached'));
     //pp_error_log("retour L_s",$wantsurl);
+    $SESSION->set ('wantsurl', null);
     redirect ($wantsurl);
 }
 
