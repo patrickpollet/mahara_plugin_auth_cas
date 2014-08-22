@@ -54,6 +54,9 @@ require_once(get_config('docroot') . 'auth/cas/PluginAuthCas.class.php');
  * Authenticates users with CAS and an associated Lightweight Directory Access Protocol
  */
 class AuthCas extends AuthLdap {
+    const LANG_CLASS_PREFIX = 'CAS_Languages_';
+
+    private static $connected = false;
 
 	public function __construct($id = null) {
 		parent::__construct($id); //takes care of initing the config values if $id <>null
@@ -87,13 +90,13 @@ class AuthCas extends AuthLdap {
 	 * @throws AuthUnknownUserException is no LDAP support
 	 */
 	public function authenticate_user_account($user, $password) {
+            global $CFG;
 
-		// first make sure we are called from auth/cas/index.php
-		// this may happen if CAS user typed its credentials in some Mahara login box ...
-		global $PHPCAS_CLIENT, $CFG;
-		if (!is_object($PHPCAS_CLIENT)) {
-			return false;
-		}
+            // First make sure we are called from auth/cas/index.php (Connected from CAS authentication).
+            // This may happen if CAS user typed its credentials in some Mahara login box...
+            if (!self::$connected) {
+                return false;
+            }
 
 		$this->must_be_ready();
 		$username = $user->username;
@@ -119,7 +122,6 @@ class AuthCas extends AuthLdap {
 		 so phpCAS::isAuthenticated fails ...
 		 $this->connectCAS();
 		 if (!(phpCAS::isAuthenticated() || (strtolower(phpCAS::getUser()) != $username) )) {
-		 pp_error_log("raté ","isAuthenticated");
 		 return false;
 		 }
 		 *********************/
@@ -130,7 +132,6 @@ class AuthCas extends AuthLdap {
 		 * and we do not call connectCAS() either ! this should have been done already in auth/cas/index.php
 		 */
 		if (strtolower(phpCAS::getUser()) != strtolower($username)) {
-			//pp_error_log("raté ","test getuser");
 			return false;
 		}
 
@@ -179,29 +180,27 @@ class AuthCas extends AuthLdap {
 	 * borrowed from Moodle code
 	 */
 	public function connectCAS() {
-		global $PHPCAS_CLIENT, $CFG;
+            global $CFG;
 
+            if (!self::$connected) {
+                // Make sure phpCAS doesn't try to start a new PHP session when connecting to the CAS server (false)
+                if ($this->config['cas_proxy']) {
+                    phpCAS::proxy((string)$this->config['cas_version'], $this->config['cas_hostname'],
+                        (int)$this->config['cas_port'], $this->config['cas_baseuri'], false);
+                } else {
+                    phpCAS::client((string)$this->config['cas_version'], $this->config['cas_hostname'],
+                        (int)$this->config['cas_port'], $this->config['cas_baseuri'], false);
+                }
 
-		//  pp_error_log("cas config",$this->config);
-		// pp_error_log("cas client",$PHPCAS_CLIENT);
-		if (!is_object($PHPCAS_CLIENT)) {
-			// Make sure phpCAS doesn't try to start a new PHP session when connecting to the CAS server (false)
-			if ($this->config['cas_proxy']) {
-				phpCAS::proxy((string)$this->config['cas_version'], $this->config['cas_hostname'],
-				(int)$this->config['cas_port'], $this->config['cas_baseuri'], false);
-			} else {
-				phpCAS::client((string)$this->config['cas_version'], $this->config['cas_hostname'],
-				(int)$this->config['cas_port'], $this->config['cas_baseuri'], false);
-			}
-
-			if ($this->config['cas_certificatecheck'] && $this->config['cas_certificatepath']) {
-				phpCAS::setCasServerCACert($this->config['cas_certificatepath']);
-			} else {
-				// Don't try to validate the server SSL credentials
-				phpCAS::setNoCasServerValidation();
-			}
-			phpCAS::setLang($this->config['cas_language']);
-		}
+                if ($this->config['cas_certificatecheck'] && $this->config['cas_certificatepath']) {
+                    phpCAS::setCasServerCACert($this->config['cas_certificatepath']);
+                } else {
+                    // Don't try to validate the server SSL credentials
+                    phpCAS::setNoCasServerValidation();
+                }
+                phpCAS::setLang(self::LANG_CLASS_PREFIX . $this->config['cas_language']);
+                self::$connected = true;
+            }
 	}
 
 	/**
