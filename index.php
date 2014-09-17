@@ -106,7 +106,6 @@ if (count ($instances) > 1) {
 
 }
 
-phpCAS::setDebug ('/tmp/phpcas_mahara.log');
 $auth = new AuthCas($instances[0]->id);
 // Connection to CAS server
 $auth->connectCAS ();
@@ -118,7 +117,7 @@ if (phpCAS::CheckAuthentication ()) {
     
 	//remove a php warning about argument 1 of login_submit must be an instance of Pieform  
 	login_submit (new Pieform(array('name'=>'dummy')), array('login_username' => phpCAS::getUser (), 'login_password' => 'not cached'));
-	
+
     //login_submit (NULL, array('login_username' => phpCAS::getUser (), 'login_password' => 'not cached'));
     //pp_error_log("retour L_s",$wantsurl);
     redirect ($wantsurl);

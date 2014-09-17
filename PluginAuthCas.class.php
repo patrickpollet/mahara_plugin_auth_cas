@@ -67,7 +67,7 @@ class PluginAuthCas extends PluginAuthLdap {
         self::CAS_PORT => '443',
         self::CAS_VERSION => CAS_VERSION_2_0,
         self::CAS_BASEURI => '',
-        self::CAS_LANGUAGE => 'english',
+        self::CAS_LANGUAGE => 'English',
         self::CAS_PROXY => '0',
         self::CAS_LOGOUT => '0',
         self::CAS_CERTIFICATECHECK => '',
@@ -132,22 +132,17 @@ class PluginAuthCas extends PluginAuthLdap {
 
     public static function get_instance_config_options ($institution, $instance = 0) {
 
-        //collect all available values for CAS language
-        $caslangprefix = 'PHPCAS_LANG_';
-        $CASLANGUAGES = array();
+        // Define all values for CAS languages.
+        $CASLANGUAGES = array(
+            'Catalan' => 'Catalan',
+            'English' => 'English',
+            'French' => 'French',
+            'German' => 'German',
+            'Greek' => 'Greek',
+            'Japanese' => 'Japanese',
+            'Spanish' => 'Spanish'
+        );
 
-        $consts = get_defined_constants (true);
-        foreach ($consts['user'] as $key => $value) {
-            if (substr ($key, 0, strlen ($caslangprefix)) == $caslangprefix) {
-                $CASLANGUAGES[$value] = $value;
-            }
-        }
-        if (empty($CASLANGUAGES)) {
-            $CASLANGUAGES = array('english' => 'english',
-                'french' => 'french');
-        }
-        
-        //pp_error_log('langues', $CASLANGUAGES);
         //currently only two versions
         $CASVERSIONS = array();
         $CASVERSIONS[CAS_VERSION_1_0] = 'CAS 1.0';
