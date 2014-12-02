@@ -83,6 +83,8 @@ OR if you use git (recommanded method):
         or editing the sideblock's template login.tpl in your theme to add the link 
         and eventually remove the regular username/password entry boxes if you are 100% CAS 
         
+7 bis) Don't forget to also customize the template login.tpl (by copying first it in theme/yourtheme/templates/) see https://github.com/patrickpollet/mahara_plugin_auth_cas/issues/8         
+        
 8) AN emergency login box (for admin and internal users) is available  at http://yourmaharasite/auth/cas/admin/login.php
         
 9) Getting rid of it :
